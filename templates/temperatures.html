@@ -1,0 +1,41 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- including ECharts file -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+</head>
+<body>
+<!-- prepare a DOM container with width and height -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    fetch("http://localhost:5002/salles/0").then(value => value.json().then(json => {
+        // based on prepared DOM, initialize echarts instance
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // specify chart configuration item and data
+        var option = {
+            title: {
+                text: 'Temperature'
+            },
+            tooltip: {},
+            legend: {
+                data: ['Temperature']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: 'Degrees',
+                type: 'bar',
+                data: json.flat(2)
+            }
+            ]
+        };
+
+        // use configuration item and data specified to show chart
+        myChart.setOption(option);
+    }));
+</script>
+</body>
+</html>
